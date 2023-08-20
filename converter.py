@@ -34,6 +34,14 @@ def convert_excel_to_csv(excel_path, csv_path):
         message = "Rows with special second column values found. Removed them."
         logger.info(message)
 
+    not_existing_items = validators.find_nonexistent_items(df)
+
+    if not not_existing_items.empty:
+        validators.log_nonexistent_items(not_existing_items)
+        df = df.drop(not_existing_items.index)
+        message = "Nonexistent items found. Removed them."
+        logger.info(message)
+
     df.to_csv(csv_path, index=False, sep=";")
     message = f"Converted: {excel_path} -> {csv_path}"
     logger.info(message)

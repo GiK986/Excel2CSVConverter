@@ -1,5 +1,6 @@
-import os
 import datetime
+import os
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -35,3 +36,19 @@ def is_allowed_folder(path):
 def ensure_directory_exists(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
+
+
+def get_server_name():
+    return os.getenv("SERVER_NAME")
+
+
+def get_database_name():
+    return os.getenv("DATABASE_NAME")
+
+
+def get_database_user():
+    return os.getenv("DATABASE_USER")
+
+
+def get_database_password():
+    return os.getenv("DATABASE_PASSWORD")
