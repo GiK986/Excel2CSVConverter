@@ -10,6 +10,7 @@ logger = Logger(log_file=utils.get_log_file())
 
 
 def convert_excel_to_csv(excel_path, csv_path):
+    logger.info(f"Processing: {excel_path}")
     try:
         df = pd.read_excel(excel_path, engine="openpyxl")
     except Exception as e:
@@ -23,6 +24,14 @@ def convert_excel_to_csv(excel_path, csv_path):
         validators.log_duplicate_rows(duplicate_rows)
         df = df.drop_duplicates(subset=df.columns[0], keep="first")
         message = "Duplicate rows found. Removed duplicates."
+        logger.info(message)
+
+    special_rows = validators.find_special_second_column_rows(df)
+
+    if not special_rows.empty:
+        validators.log_special_rows(special_rows)
+        df = df.drop(special_rows.index)
+        message = "Rows with special second column values found. Removed them."
         logger.info(message)
 
     df.to_csv(csv_path, index=False, sep=";")

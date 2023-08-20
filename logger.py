@@ -21,3 +21,7 @@ class Logger:
     @staticmethod
     def error(message):
         logging.error(message)
+
+    @staticmethod
+    def warning(message):
+        logging.warning(message)
