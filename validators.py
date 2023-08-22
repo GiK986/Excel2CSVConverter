@@ -50,10 +50,13 @@ def find_nonexistent_items(df):
     create_temp_table_query = f"CREATE TABLE {temp_table_name} (ItemName NVARCHAR(255))"
     cursor.execute(create_temp_table_query)
 
-    # Insert the Excel data into the temporary table
+    # Prepare the data for insertion
+    items_to_insert = [(item,) for item in df.iloc[:, 0]]
+
+    # Insert the Excel data into the temporary table using executemany
     insert_data_query = f"INSERT INTO {temp_table_name} (ItemName) VALUES (?)"
-    for item in df.iloc[:, 0]:
-        cursor.execute(insert_data_query, item)
+    cursor.fast_executemany = True
+    cursor.executemany(insert_data_query, items_to_insert)
 
     # Query to find nonexistent items
     query = f"""
