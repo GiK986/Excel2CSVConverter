@@ -64,5 +64,10 @@ if __name__ == "__main__":
         exit(0)
 
     convert_folder_contents(input_root_folder)
+
+    # Remove old folders and files
+    utils.remove_old_output_folders()
+    utils.remove_old_log_files()
+
     # Log a completion message
     logger.info("Excel to CSV conversion completed")

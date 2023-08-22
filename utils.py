@@ -1,7 +1,10 @@
 import datetime
 import os
+import shutil
 
 from dotenv import load_dotenv
+
+from logger import Logger
 
 load_dotenv()
 
@@ -52,3 +55,38 @@ def get_database_user():
 
 def get_database_password():
     return os.getenv("DATABASE_PASSWORD")
+
+
+logger = Logger(log_file=get_log_file())
+
+
+def remove_old_folders(directory, days_to_keep=7):
+    today = datetime.datetime.now()
+    for item in os.listdir(directory):
+        item_path = os.path.join(directory, item)
+        if os.path.isdir(item_path):
+            modified_time = datetime.datetime.fromtimestamp(os.path.getmtime(item_path))
+            age = (today - modified_time).days
+            if age > days_to_keep:
+                shutil.rmtree(item_path)
+                logger.info(f"Removed old folder: {item_path}")
+
+
+def remove_old_files(directory, days_to_keep=7):
+    today = datetime.datetime.now()
+    for item in os.listdir(directory):
+        item_path = os.path.join(directory, item)
+        if os.path.isfile(item_path):
+            modified_time = datetime.datetime.fromtimestamp(os.path.getmtime(item_path))
+            age = (today - modified_time).days
+            if age > days_to_keep:
+                os.remove(item_path)
+                logger.info(f"Removed old file: {item_path}")
+
+
+def remove_old_output_folders():
+    remove_old_folders(OUTPUT_FOLDER)
+
+
+def remove_old_log_files():
+    remove_old_files(LOG_FOLDER)
