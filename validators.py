@@ -36,6 +36,9 @@ def get_connection_string():
 
 def find_nonexistent_items(df):
     """Returns rows where the first column is not found in the database"""
+    if df.empty:
+        return df
+
     connection_string = get_connection_string()
     try:
         connection = pyodbc.connect(connection_string)
