@@ -66,9 +66,9 @@ def find_nonexistent_items(df):
     SELECT DISTINCT 
            t.ItemName
     FROM #TempItems t
-         LEFT JOIN [TecCatDB_AutoBroker].[dbo].[Items] i 
-            ON t.ItemName = i.Provider_Number AND i.IS_Type_ID = 2
-    WHERE i.Article_Number IS NULL;
+         LEFT JOIN [UT103].[dbo].[vw_Items] i 
+            ON t.ItemName = i.Provider_Number
+    WHERE i.[Provider_Number] IS NULL;
     """
 
     cursor.execute(query)
