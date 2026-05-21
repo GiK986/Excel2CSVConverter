@@ -1,0 +1,9 @@
+services:
+  excel2csv:
+    image: ghcr.io/gik986/excel2csvconverter:latest
+    container_name: excel2csv
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - /mnt/pricelist:/data/pricelist
+      - /mnt/logs:/data/logs
