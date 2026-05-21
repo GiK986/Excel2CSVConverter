@@ -7,3 +7,10 @@ services:
     volumes:
       - /mnt/pricelist:/data/pricelist
       - /mnt/logs:/data/logs
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    security_opt:
+      - no-new-privileges:true
