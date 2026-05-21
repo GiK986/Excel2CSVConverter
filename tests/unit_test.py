@@ -13,7 +13,7 @@ class TestGetInputRootFolder(unittest.TestCase):
     def test_returns_input_folder(self):
         # Arrange
         date_now = datetime.datetime.now().strftime("%d.%m.%Y")
-        expected = os.path.join("./test_input", date_now)
+        expected = os.path.abspath(os.path.join("./test_input", date_now))
 
         # Act
         result = get_input_root_folder()
