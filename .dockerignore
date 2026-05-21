@@ -9,3 +9,7 @@ docs/
 tests/
 *.bat
 .DS_Store
+.claude/
+.pytest_cache/
+test_input/
+test_output/
