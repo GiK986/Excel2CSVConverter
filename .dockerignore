@@ -1,0 +1,11 @@
+venv/
+.env
+.env-sampel
+.git/
+.idea/
+__pycache__/
+*.pyc
+docs/
+tests/
+*.bat
+.DS_Store
